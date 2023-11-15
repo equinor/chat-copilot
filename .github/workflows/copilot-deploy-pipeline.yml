@@ -38,6 +38,7 @@ jobs:
       AZURE_OPENAI_ENDPOINT: ${{secrets.AZURE_OPENAI_ENDPOINT}}
 
   int-tests:
+    needs: [int]
     uses: ./.github/workflows/copilot-run-integration-tests.yml
     with:
       ENVIRONMENT: int
