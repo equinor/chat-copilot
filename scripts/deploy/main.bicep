@@ -202,7 +202,7 @@ resource appServiceWebConfig 'Microsoft.Web/sites/config@2022-09-01' = {
     use32BitWorkerProcess: false
     vnetRouteAllEnabled: true
     webSocketsEnabled: true
-    appSettings: concat([
+    appSettings: [
         {
           name: 'Authentication:Type'
           value: 'AzureAd'
@@ -427,22 +427,21 @@ resource appServiceWebConfig 'Microsoft.Web/sites/config@2022-09-01' = {
         //   name: 'Plugins:0:ManifestDomain'
         //   value: 'https://www.klarna.com'
         // }
-      ],
-      (deployAdmePlugin) ? [
-        {
-          name: 'Plugins:1:Name'
-          value: 'Adme'
-        }
-        {
-          name: 'Plugins:1:ManifestDomain'
-          value: 'https://${appServiceAdmePlugin.properties.defaultHostName}'
-        }
-        {
-          name: 'Plugins:1:Key'
-          value: listkeys('${appServiceAdmePlugin.id}/host/default/', '2022-09-01').functionKeys.default
-        }
-      ] : []
-    )
+      ]
+      // (deployAdmePlugin) ? [
+      //   {
+      //     name: 'Plugins:1:Name'
+      //     value: 'Adme'
+      //   }
+      //   {
+      //     name: 'Plugins:1:ManifestDomain'
+      //     value: 'https://${appServiceAdmePlugin.properties.defaultHostName}'
+      //   }
+      //   {
+      //     name: 'Plugins:1:Key'
+      //     value: listkeys('${appServiceAdmePlugin.id}/host/default/', '2022-09-01').functionKeys.default
+      //   }
+      // ] : []
   }
 }
 
@@ -659,11 +658,8 @@ resource appServiceAdmePlugin 'Microsoft.Web/sites@2022-09-01' = if (deployAdmeP
   properties: {
     serverFarmId: appServicePlan.id
     httpsOnly: true
-    publicNetworkAccess: 'Enabled'
     siteConfig: {
       alwaysOn: true
-      linuxFxVersion: 'DOTNET|6.0'
-      use32BitWorkerProcess: false
     }
   }
 }
