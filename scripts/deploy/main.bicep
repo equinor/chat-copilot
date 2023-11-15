@@ -659,8 +659,11 @@ resource appServiceAdmePlugin 'Microsoft.Web/sites@2022-09-01' = if (deployAdmeP
   properties: {
     serverFarmId: appServicePlan.id
     httpsOnly: true
+    publicNetworkAccess: 'Enabled'
     siteConfig: {
       alwaysOn: true
+      linuxFxVersion: 'DOTNET|6.0'
+      use32BitWorkerProcess: false
     }
   }
 }
@@ -796,11 +799,11 @@ resource appInsightExtensionMemory 'Microsoft.Web/sites/siteextensions@2022-09-0
   dependsOn: [ appServiceMemoryPipelineDeploy ]
 }
 
-// resource appInsightExtensionWebSearchPlugin 'Microsoft.Web/sites/siteextensions@2022-09-01' = if (deployWebSearcherPlugin) {
-//   parent: functionAppWebSearcherPlugin
-//   name: 'Microsoft.ApplicationInsights.AzureWebSites'
-//   dependsOn: [ functionAppWebSearcherDeploy ]
-// }
+resource appInsightExtensionWebSearchPlugin 'Microsoft.Web/sites/siteextensions@2022-09-01' = if (deployAdmePlugin) {
+  parent: appServiceAdmePlugin
+  name: 'Microsoft.ApplicationInsights.AzureWebSites'
+  dependsOn: [ appServiceAdmePluginDeploy ]
+}
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: 'la-${uniqueName}'
