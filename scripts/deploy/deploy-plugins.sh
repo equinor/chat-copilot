@@ -97,7 +97,7 @@ for PLUGIN_PACKAGE in $PACKAGES_PATH/*; do
     MATCHED_NUMBER=0
     MATCHED_DEPLOYMENT=""
     for PLUGIN_DEPLOYMENT_NAME in $PLUGIN_DEPLOYMENT_NAMES; do
-        if [[ "$PLUGIN_DEPLOYMENT_NAME" =~ ^function-.*$PLUGIN_NAME-plugin$ ]]; then
+        if [[ "$PLUGIN_DEPLOYMENT_NAME" =~ ^app-.*$PLUGIN_NAME-plugin$ ]]; then
             MATCHED_NUMBER=$((MATCHED_NUMBER + 1))
             MATCHED_DEPLOYMENT=$PLUGIN_DEPLOYMENT_NAME
         fi
