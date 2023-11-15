@@ -799,7 +799,7 @@ resource appInsightExtensionMemory 'Microsoft.Web/sites/siteextensions@2022-09-0
   dependsOn: [ appServiceMemoryPipelineDeploy ]
 }
 
-resource appInsightExtensionWebSearchPlugin 'Microsoft.Web/sites/siteextensions@2022-09-01' = if (deployAdmePlugin) {
+resource appInsightExtensionAdmePlugin 'Microsoft.Web/sites/siteextensions@2022-09-01' = if (deployAdmePlugin) {
   parent: appServiceAdmePlugin
   name: 'Microsoft.ApplicationInsights.AzureWebSites'
   dependsOn: [ appServiceAdmePluginDeploy ]
