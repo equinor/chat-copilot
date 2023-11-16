@@ -605,14 +605,14 @@ resource appServiceMemoryPipelineConfig 'Microsoft.Web/sites/config@2022-09-01' 
         name: 'SemanticMemory:Services:AzureFormRecognizer:Auth'
         value: 'ApiKey'
       }
-      {
-        name: 'SemanticMemory:Services:AzureFormRecognizer:Endpoint'
-        value: ocrAccount.properties.endpoint
-      }
-      {
-        name: 'SemanticMemory:Services:AzureFormRecognizer:APIKey'
-        value: ocrAccount.listKeys().key1
-      }
+      // {
+      //   name: 'SemanticMemory:Services:AzureFormRecognizer:Endpoint'
+      //   value: ocrAccount.properties.endpoint
+      // }
+      // {
+      //   name: 'SemanticMemory:Services:AzureFormRecognizer:APIKey'
+      //   value: ocrAccount.listKeys().key1
+      // }
       {
         name: 'SemanticMemory:Services:OpenAI:TextModel'
         value: completionModel
@@ -1212,25 +1212,25 @@ resource speechAccount 'Microsoft.CognitiveServices/accounts@2022-12-01' = if (d
   }
 }
 
-resource ocrAccount 'Microsoft.CognitiveServices/accounts@2022-12-01' = {
-  name: 'cog-ocr-${uniqueName}'
-  location: location
-  sku: {
-    name: 'S0'
-  }
-  kind: 'FormRecognizer'
-  identity: {
-    type: 'None'
-  }
-  properties: {
-    customSubDomainName: 'cog-ocr-${uniqueName}'
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
-    publicNetworkAccess: 'Enabled'
-    restore: true
-  }
-}
+// resource ocrAccount 'Microsoft.CognitiveServices/accounts@2022-12-01' = {
+//   name: 'cog-ocr-${uniqueName}'
+//   location: location
+//   sku: {
+//     name: 'S0'
+//   }
+//   kind: 'FormRecognizer'
+//   identity: {
+//     type: 'None'
+//   }
+//   properties: {
+//     customSubDomainName: 'cog-ocr-${uniqueName}'
+//     networkAcls: {
+//       defaultAction: 'Allow'
+//     }
+//     publicNetworkAccess: 'Enabled'
+//     restore: true
+//   }
+// }
 
 resource bingSearchService 'Microsoft.Bing/accounts@2020-06-10' = if (deployWebSearcherPlugin) {
   name: 'bing-search-${uniqueName}'
