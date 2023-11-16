@@ -1228,6 +1228,7 @@ resource ocrAccount 'Microsoft.CognitiveServices/accounts@2022-12-01' = {
       defaultAction: 'Allow'
     }
     publicNetworkAccess: 'Enabled'
+    restore: true
   }
 }
 
