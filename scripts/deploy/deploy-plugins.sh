@@ -103,19 +103,16 @@ for PLUGIN_PACKAGE in $PACKAGES_PATH/*; do
         fi
     done
 
-    if [[ $MATCHED_NUMBER -eq 0 ]]; then
+    if [[ $MATCHED_NUMBER -eq 1 ]]; then
+        echo "Matched Web App resource name '$MATCHED_DEPLOYMENT' for '$PLUGIN_NAME'"
+        PLUGIN_DEPLOYMENT_MATCHES+=($MATCHED_DEPLOYMENT)
+        PLUGIN_PACKAGE_MATCHES+=($PLUGIN_PACKAGE)
+    else
         echo "Could not find Web App resource name for plugin '$PLUGIN_NAME'."
         echo "Make sure the deployed Web App resource name matches the plugin zip package name."
-        exit 1
-    elif [[ $MATCHED_NUMBER -gt 1 ]]; then
-        echo "Found multiple Web App resource names for plugin '$PLUGIN_NAME'."
-        echo "Make sure the deployed Web App resource name matches the plugin zip package name."
-        exit 1
     fi
 
-    echo "Matched Web App resource name '$MATCHED_DEPLOYMENT' for '$PLUGIN_NAME'"
-    PLUGIN_DEPLOYMENT_MATCHES+=($MATCHED_DEPLOYMENT)
-    PLUGIN_PACKAGE_MATCHES+=($PLUGIN_PACKAGE)
+    
 done
 echo ""
 
