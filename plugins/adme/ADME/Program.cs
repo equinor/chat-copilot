@@ -43,13 +43,13 @@ string? adminApiKey = Environment.GetEnvironmentVariable("CognitiveSearch:Search
 
 builder.Services.AddAzureClients(az =>
 {
-    DefaultAzureCredentialOptions options = new()
-    {
-        ManagedIdentityClientId = builder.Configuration["AppSettings:managedIdentityClientId"]
-    };
+    // DefaultAzureCredentialOptions options = new()
+    // {
+    //     ManagedIdentityClientId = builder.Configuration["AppSettings:managedIdentityClientId"]
+    // };
 
-    az.ConfigureDefaults(builder.Configuration.GetSection("AzureDefaults"));
-    az.UseCredential(new DefaultAzureCredential(options));
+    //az.ConfigureDefaults(builder.Configuration.GetSection("AzureDefaults"));
+    az.UseCredential(new DefaultAzureCredential());
     JsonSerializerOptions serializerOptions = new()
     {
         Converters = {new MicrosoftSpatialGeoJsonConverter()},
