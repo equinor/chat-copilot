@@ -58,7 +58,7 @@ jobs:
         run: |
           scripts\deploy\package-plugins.ps1 `
             -BuildConfiguration Release `
-            -DotNetFramework net6.0 `
+            -DotNetFramework net7.0 `
             -OutputDirectory ${{ github.workspace }}\scripts\deploy `
             -Version ${{ steps.versiontag.outputs.versiontag }} `
             -InformationalVersion "Built from commit ${{ steps.gitversion.outputs.ShortSha }} on $(Get-Date -Format "yyyy-MM-dd")"
