@@ -12,7 +12,7 @@ usage() {
     echo ""
     echo "Arguments:"
     echo "  -c, --configuration CONFIGURATION      Build configuration (default: Release)"
-    echo "  -d, --dotnet DOTNET_FRAMEWORK_VERSION  Target dotnet framework (default: net6.0)"
+    echo "  -d, --dotnet DOTNET_FRAMEWORK_VERSION  Target dotnet framework (default: net7.0)"
     echo "  -o, --output OUTPUT_DIRECTORY          Output directory (default: $SCRIPT_ROOT)"
     echo "  -v  --version VERSION                  Version to set files to (default: 1.0.0)"
     echo "  -i  --info INFO                        Additional info to put in version details"
