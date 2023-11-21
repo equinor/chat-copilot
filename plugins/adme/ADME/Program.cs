@@ -37,9 +37,9 @@ builder.Services.AddApiVersioning(c =>
 
 builder.AddSwagger(scopes: new[] {"access_as_user"});
 
-string searchServiceEndpoint = builder.Configuration["Azure:CognitiveSearch:Endpoint"];
-string searchAlias = builder.Configuration["Azure:CognitiveSearch:SearchIndexAlias"];
-string? adminApiKey = Environment.GetEnvironmentVariable("CognitiveSearch:SearchAdminKey");
+string searchServiceEndpoint = builder.Configuration["Azure:CognitiveSearch:Endpoint"]!;
+string searchAlias = builder.Configuration["Azure:CognitiveSearch:SearchIndexAlias"]!;
+string? adminApiKey = Environment.GetEnvironmentVariable("COGNITIVESEARCH_ADMINKEY");
 
 builder.Services.AddAzureClients(az =>
 {
@@ -63,7 +63,7 @@ builder.Services.AddAzureClients(az =>
     az.AddOpenAIClient(
         new Uri(builder.Configuration["Azure:OpenAi:Endpoint"] ??
                 throw new ArgumentNullException("Azure:OpenAi:Endpoint")),
-        new AzureKeyCredential(Environment.GetEnvironmentVariable("OpenAi:ApiKey") ??
+        new AzureKeyCredential(Environment.GetEnvironmentVariable("OPENAI_APIKEY") ??
                                throw new ArgumentNullException("Azure:OpenAi:ApiKey")));
 });
 
