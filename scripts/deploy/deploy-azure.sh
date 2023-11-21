@@ -105,10 +105,6 @@ while [[ $# -gt 0 ]]; do
         NO_SPEECH_SERVICES=true
         shift
         ;;
-    -ws | --deploy-web-searcher-plugin)
-        DEPLOY_WEB_SEARCHER_PLUGIN=false
-        shift
-        ;;
     -dd | --debug-deployment)
         DEBUG_DEPLOYMENT=true
         shift
