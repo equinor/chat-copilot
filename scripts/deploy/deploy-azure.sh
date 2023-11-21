@@ -98,7 +98,7 @@ while [[ $# -gt 0 ]]; do
         shift
         ;;
     -nc | --no-cosmos-db)
-        NO_COSMOS_DB=true
+        NO_COSMOS_DB=false
         shift
         ;;
     -ns | --no-speech-services)
@@ -199,7 +199,7 @@ JSON_CONFIG=$(
     "deployNewAzureOpenAI": { "value": $([ "$NO_NEW_AZURE_OPENAI" = true ] && echo "false" || echo "true") },
     "memoryStore": { "value": "$MEMORY_STORE" },
     "deployCosmosDB": { "value": $([ "$NO_COSMOS_DB" = true ] && echo "false" || echo "true") },
-    "deploySpeechServices": { "value": $([ "$NO_SPEECH_SERVICES" = true ] && echo "false" || echo "true") },
+    "deploySpeechServices": { "value": $([ "$NO_SPEECH_SERVICES" = true ] && echo "false" || echo "true") }
 }
 EOF
 )
