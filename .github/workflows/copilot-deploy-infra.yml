@@ -30,7 +30,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { dotnet: "6.0", configuration: Release, os: ubuntu-latest }
+          - { dotnet: "7.0", configuration: Release, os: ubuntu-latest }
     outputs:
       deployment-id: ${{steps.deployment-id.outputs.deployment_name}}
 
