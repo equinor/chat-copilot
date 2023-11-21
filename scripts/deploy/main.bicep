@@ -427,33 +427,7 @@ resource appServiceWebConfig 'Microsoft.Web/sites/config@2022-09-01' = {
           name: 'Plugins:0:ManifestDomain'
           value: 'https://www.klarna.com'
         }
-        // {
-        //   name: 'Plugins:1:Name'
-        //   value: 'Adme'
-        // }
-        // {
-        //   name: 'Plugins:1:ManifestDomain'
-        //   value: 'https://${appServiceAdmePlugin.properties.defaultHostName}'
-        // }
-        // {
-        //   name: 'Plugins:1:Key'
-        //   value: listkeys('${appServiceAdmePlugin.id}/host/default/', '2022-09-01').functionKeys.default
-        // }
       ]
-      // (deployAdmePlugin) ? [
-      //   {
-      //     name: 'Plugins:1:Name'
-      //     value: 'Adme'
-      //   }
-      //   {
-      //     name: 'Plugins:1:ManifestDomain'
-      //     value: 'https://${appServiceAdmePlugin.properties.defaultHostName}'
-      //   }
-      //   {
-      //     name: 'Plugins:1:Key'
-      //     value: listkeys('${appServiceAdmePlugin.id}/host/default/', '2022-09-01').functionKeys.default
-      //   }
-      // ] : []
   }
 }
 
@@ -605,14 +579,6 @@ resource appServiceMemoryPipelineConfig 'Microsoft.Web/sites/config@2022-09-01' 
         name: 'SemanticMemory:Services:AzureFormRecognizer:Auth'
         value: 'ApiKey'
       }
-      // {
-      //   name: 'SemanticMemory:Services:AzureFormRecognizer:Endpoint'
-      //   value: ocrAccount.properties.endpoint
-      // }
-      // {
-      //   name: 'SemanticMemory:Services:AzureFormRecognizer:APIKey'
-      //   value: ocrAccount.listKeys().key1
-      // }
       {
         name: 'SemanticMemory:Services:OpenAI:TextModel'
         value: completionModel
@@ -657,6 +623,15 @@ resource appServiceMemoryPipelineDeploy 'Microsoft.Web/sites/extensions@2022-09-
   ]
 }
 
+resource appServicePlanPlugins 'Microsoft.Web/serverfarms@2022-03-01' = {
+  name: 'asp-${uniqueName}-plugins'
+  location: location
+  kind: 'linux'
+  sku: {
+    name: webAppServiceSku
+  }
+}
+
 resource appServiceAdmePlugin 'Microsoft.Web/sites@2022-09-01' = if (deployAdmePlugin) {
   name: 'app-${uniqueName}-adme-plugin'
   location: location
@@ -668,10 +643,11 @@ resource appServiceAdmePlugin 'Microsoft.Web/sites@2022-09-01' = if (deployAdmeP
     type: 'SystemAssigned'
   }
   properties: {
-    serverFarmId: appServicePlan.id
+    serverFarmId: appServicePlanPlugins.id
     httpsOnly: true
     siteConfig: {
       alwaysOn: true
+      linuxFxVersion: 'DOTNETCORE|7.0'
     }
   }
 }
