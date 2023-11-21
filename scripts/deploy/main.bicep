@@ -79,9 +79,6 @@ param memoryStore string = 'AzureCognitiveSearch'
 @description('Whether to deploy Azure Speech Services to enable input by voice')
 param deploySpeechServices bool = false
 
-@description('Whether to deploy the web searcher plugin, which requires a Bing resource')
-param deployWebSearcherPlugin bool = false
-
 @description('Whether to deploy the ADME plugin')
 param deployAdmePlugin bool = true
 
@@ -1212,14 +1209,14 @@ resource speechAccount 'Microsoft.CognitiveServices/accounts@2022-12-01' = if (d
 //   }
 // }
 
-resource bingSearchService 'Microsoft.Bing/accounts@2020-06-10' = if (deployWebSearcherPlugin) {
-  name: 'bing-search-${uniqueName}'
-  location: 'global'
-  sku: {
-    name: 'S1'
-  }
-  kind: 'Bing.Search.v7'
-}
+// resource bingSearchService 'Microsoft.Bing/accounts@2020-06-10' = if (deployWebSearcherPlugin) {
+//   name: 'bing-search-${uniqueName}'
+//   location: 'global'
+//   sku: {
+//     name: 'S1'
+//   }
+//   kind: 'Bing.Search.v7'
+// }
 
 output webapiUrl string = appServiceWeb.properties.defaultHostName
 output webapiName string = appServiceWeb.name
