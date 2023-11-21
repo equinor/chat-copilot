@@ -645,6 +645,7 @@ resource appServiceAdmePlugin 'Microsoft.Web/sites@2022-09-01' = if (deployAdmeP
   properties: {
     serverFarmId: appServicePlanPlugins.id
     httpsOnly: true
+    reserved: true
     siteConfig: {
       alwaysOn: true
       linuxFxVersion: 'DOTNETCORE|7.0'
