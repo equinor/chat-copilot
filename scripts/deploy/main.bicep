@@ -624,7 +624,7 @@ resource appServiceMemoryPipelineDeploy 'Microsoft.Web/sites/extensions@2022-09-
 }
 
 resource appServicePlanPlugins 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: 'asp-${uniqueName}-plugin'
+  name: 'asp-${uniqueName}-plugins'
   location: location
   kind: 'linux'
   sku: {
@@ -643,7 +643,7 @@ resource appServiceAdmePlugin 'Microsoft.Web/sites@2022-09-01' = if (deployAdmeP
     type: 'SystemAssigned'
   }
   properties: {
-    serverFarmId: appServicePlan.id
+    serverFarmId: appServicePlanPlugins.id
     httpsOnly: true
     siteConfig: {
       alwaysOn: true
