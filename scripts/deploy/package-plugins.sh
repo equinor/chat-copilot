@@ -62,7 +62,7 @@ done
 
 # Set defaults
 : "${CONFIGURATION:="Release"}"
-: "${DOTNET:="net6.0"}"
+: "${DOTNET:="net7.0"}"
 : "${VERSION:="1.0.0"}"
 : "${INFO:=""}"
 : "${OUTPUT_DIRECTORY:="$SCRIPT_ROOT"}"
