@@ -20,9 +20,9 @@ param webApiPackageUri string = 'https://aka.ms/copilotchat/webapi/latest'
 #disable-next-line no-hardcoded-env-urls
 param memoryPipelinePackageUri string = 'https://aka.ms/copilotchat/memorypipeline/latest'
 
-@description('Location of the websearcher plugin to deploy')
-#disable-next-line no-hardcoded-env-urls
-param webSearcherPackageUri string = 'https://aka.ms/copilotchat/websearcher/latest'
+// @description('Location of the websearcher plugin to deploy')
+// #disable-next-line no-hardcoded-env-urls
+// param webSearcherPackageUri string = 'https://aka.ms/copilotchat/websearcher/latest'
 
 @description('Location of the adme plugin to deploy')
 #disable-next-line no-hardcoded-env-urls
@@ -626,9 +626,12 @@ resource appServiceMemoryPipelineDeploy 'Microsoft.Web/sites/extensions@2022-09-
 resource appServicePlanPlugins 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: 'asp-${uniqueName}-plugins'
   location: location
-  kind: 'linux'
+  kind: 'app,linux'
   sku: {
     name: webAppServiceSku
+  }
+  properties: {
+    reserved: true
   }
 }
 
