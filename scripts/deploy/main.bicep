@@ -787,7 +787,6 @@ resource appInsightExtensionMemory 'Microsoft.Web/sites/siteextensions@2022-09-0
 resource appInsightExtensionAdmePlugin 'Microsoft.Web/sites/siteextensions@2022-09-01' = if (deployAdmePlugin) {
   parent: appServiceAdmePlugin
   name: 'Microsoft.ApplicationInsights.AzureWebSites'
-  dependsOn: [ appServiceAdmePluginDeploy ]
 }
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
