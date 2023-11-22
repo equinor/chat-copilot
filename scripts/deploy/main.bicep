@@ -675,17 +675,17 @@ resource appServiceAdmePluginConfig 'Microsoft.Web/sites/config@2022-09-01' = if
   }
 }
 
-resource appServiceAdmePluginDeploy 'Microsoft.Web/sites/extensions@2022-09-01' = if (deployPackages && deployAdmePlugin) {
-  name: 'MSDeploy'
-  kind: 'string'
-  parent: appServiceAdmePlugin
-  properties: {
-    packageUri: admePackageUri
-  }
-  dependsOn: [
-    appServiceAdmePluginConfig
-  ]
-}
+// resource appServiceAdmePluginDeploy 'Microsoft.Web/sites/extensions@2022-09-01' = if (deployPackages && deployAdmePlugin) {
+//   name: 'MSDeploy'
+//   kind: 'string'
+//   parent: appServiceAdmePlugin
+//   properties: {
+//     packageUri: admePackageUri
+//   }
+//   dependsOn: [
+//     appServiceAdmePluginConfig
+//   ]
+// }
 
 resource keyVaultSecretsUserRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' existing = {
   name: '4633458b-17de-408a-b874-0445c86b69e6'
