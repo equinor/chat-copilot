@@ -784,10 +784,10 @@ resource appInsightExtensionMemory 'Microsoft.Web/sites/siteextensions@2022-09-0
   dependsOn: [ appServiceMemoryPipelineDeploy ]
 }
 
-resource appInsightExtensionAdmePlugin 'Microsoft.Web/sites/siteextensions@2022-09-01' = if (deployAdmePlugin) {
-  parent: appServiceAdmePlugin
-  name: 'Microsoft.ApplicationInsights.AzureWebSites'
-}
+// resource appInsightExtensionAdmePlugin 'Microsoft.Web/sites/siteextensions@2022-09-01' = if (deployAdmePlugin) {
+//   parent: appServiceAdmePlugin
+//   name: 'Microsoft.ApplicationInsights.AzureWebSites'
+// }
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: 'la-${uniqueName}'
