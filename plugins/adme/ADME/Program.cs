@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 using ADME.Helpers;
 using ADME.Models;
@@ -11,16 +12,50 @@ using Azure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Identity.Web;
 
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddMicrosoftIdentityWebApiAuthentication(builder.Configuration)
+    .EnableTokenAcquisitionToCallDownstreamApi()
+    .AddInMemoryTokenCaches();
+JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+
 builder.Services.AddControllers();
+
+string[] corsUrls = builder.Configuration.GetSection("AllowedOrigins").Value?.Split(";") ??
+                    throw new ArgumentException("CORS AllowedOrigins must be set in config.");
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithOrigins(corsUrls);
+    });
+});
+
 builder.Services.AddApplicationInsightsTelemetry();
+
+builder.Services.AddAuthorizationCore(options =>
+{
+    options.AddPolicy("ReadAccess",
+        policy => policy.RequireClaim("roles", "APIReader", "APIRestrictedReader")
+            .RequireScope("access_as_user")); // role defined in API app manifest
+    options.AddPolicy("WriteAccess",
+        policy => policy.RequireClaim("roles", "APIWriter")
+            .RequireScope("access_as_user")); // role defined in API app manifest
+    options.AddPolicy("IndexSource.Write",
+        policy => policy.RequireClaim("roles", "IndexSource.Write").RequireScope("access_as_user"));
+    options.AddPolicy("IndexSource.Read",
+        policy => policy.RequireClaim("roles", "IndexSource.Write", "IndexSource.Read").RequireScope("access_as_user"));
+});
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRouting();
-builder.Services.AddOptions();
-builder.Services.Configure<OpenAiConfig>(builder.Configuration.GetSection("Azure:OpenAi"));
+
 builder.Services.AddApiVersioning(c =>
     {
         c.DefaultApiVersion = new ApiVersion(0, 2);
@@ -41,14 +76,11 @@ string searchServiceEndpoint = builder.Configuration["Azure:CognitiveSearch:Endp
 string searchAlias = builder.Configuration["Azure:CognitiveSearch:SearchIndexAlias"]!;
 string? adminApiKey = Environment.GetEnvironmentVariable("COGNITIVESEARCH_ADMINKEY");
 
+builder.Services.AddOptions();
+builder.Services.Configure<OpenAiConfig>(builder.Configuration.GetSection("Azure:OpenAi"));
 builder.Services.AddAzureClients(az =>
 {
-    // DefaultAzureCredentialOptions options = new()
-    // {
-    //     ManagedIdentityClientId = builder.Configuration["AppSettings:managedIdentityClientId"]
-    // };
-
-    //az.ConfigureDefaults(builder.Configuration.GetSection("AzureDefaults"));
+    az.ConfigureDefaults(builder.Configuration.GetSection("AzureDefaults"));
     az.UseCredential(new DefaultAzureCredential());
     JsonSerializerOptions serializerOptions = new()
     {
@@ -57,7 +89,7 @@ builder.Services.AddAzureClients(az =>
     };
     az.AddSearchClient(new Uri(searchServiceEndpoint),
             searchAlias,
-            new AzureKeyCredential(adminApiKey))
+            new AzureKeyCredential(adminApiKey!))
         .ConfigureOptions(op => op.Serializer = new JsonObjectSerializer(serializerOptions));
 
     az.AddOpenAIClient(
@@ -74,8 +106,11 @@ WebApplication app = builder.Build();
 
 app.UseSwaggerUi(builder.Configuration["Swagger:ClientId"]!,
     realmClientId: builder.Configuration["Azure:EntraID:ClientId"]!);
+app.UseCors();
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 app.MapGet("/", () => { return "Always On"; });
 
