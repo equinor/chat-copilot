@@ -1,12 +1,16 @@
 using ADME.Models;
 using ADME.Services.Interfaces;
+using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace ADME.Controllers;
 
-// [Authorize]
+[Authorize]
+[ApiVersion("0.1")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [Route("api/[controller]")]
 [ApiController]
 [Produces("application/json")]
@@ -28,6 +32,8 @@ public class SearchController : ControllerBase
     /// <param name="filter"></param>
     /// <param name="cts"></param>
     /// <returns></returns>
+    [ApiVersion("0.2")]
+    [Authorize(Policy = "ReadAccess")]
     [HttpGet("{parm}", Name = "Search")]
     public async Task<ActionResult<SearchResult>> Search(string parm,
         [FromQuery] SearchFilters filter, [FromQuery] CancellationToken cts)
