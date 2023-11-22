@@ -664,11 +664,11 @@ resource appServiceAdmePluginConfig 'Microsoft.Web/sites/config@2022-09-01' = if
         value: appInsights.properties.InstrumentationKey
       }
       {
-        name: 'CognitiveSearch:AdminKey'
+        name: 'COGNITIVESEARCH_ADMINKEY'
         value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=acs-admin-key)'
       }
       {
-        name: 'OpenAi:ApiKey'
+        name: 'OPENAI_APIKEY'
         value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=openai-api-key)'
       }
     ]
