@@ -23,9 +23,9 @@ public static class WebApplicationExtensions
             c.AddSecurityDefinition("OAuth2", new OpenApiSecurityScheme
             {
                 Type = securitySchemeType,
-                Flows = new OpenApiOAuthFlows()
+                Flows = new OpenApiOAuthFlows
                 {
-                    AuthorizationCode = new OpenApiOAuthFlow()
+                    AuthorizationCode = new OpenApiOAuthFlow
                     {
                         TokenUrl = new(
                             $"https://login.microsoftonline.com/{builder.Configuration["AzureAD:TenantId"]}/oauth2/v2.0/token"),

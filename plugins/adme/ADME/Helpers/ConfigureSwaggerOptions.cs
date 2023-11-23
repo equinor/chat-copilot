@@ -56,10 +56,9 @@ public class ConfigureSwaggerOptions
     {
         var info = new OpenApiInfo
         {
-            Title = "Subsurface Cognitive Search API",
+            Title = "OSDU Copilot Plugin",
             Version = description.ApiVersion.ToString(),
-            Description = "This is the API for the subsurface congitive search engine and uses Azure AD Bearer tokens for authentication",
-            Contact = new OpenApiContact() { Name = "DataTrawlers", Email = "fg_datatrawlers@equinor.com" },
+            Description = "This is the OSDU plugin for the Chat Copilot and uses Azure AD Bearer tokens for authentication",
         };
 
         if (description.IsDeprecated)

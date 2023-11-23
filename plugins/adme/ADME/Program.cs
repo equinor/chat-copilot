@@ -58,7 +58,7 @@ builder.Services.AddRouting();
 
 builder.Services.AddApiVersioning(c =>
     {
-        c.DefaultApiVersion = new ApiVersion(0, 2);
+        c.DefaultApiVersion = new ApiVersion(0, 1);
         c.AssumeDefaultVersionWhenUnspecified = true;
         c.ReportApiVersions = true;
     })
@@ -104,8 +104,8 @@ builder.Services.AddScoped<ICognitiveSearchService, CognitiveSearchService>();
 
 WebApplication app = builder.Build();
 
-app.UseSwaggerUi(builder.Configuration["Swagger:ClientId"]!,
-    realmClientId: builder.Configuration["Azure:EntraID:ClientId"]!);
+app.UseSwaggerUi(builder.Configuration["Swagger:ClientId"]!, 
+    builder.Configuration["AzureAd:ClientId"]!);
 app.UseCors();
 app.UseHttpsRedirection();
 app.UseRouting();

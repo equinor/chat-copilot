@@ -24,9 +24,9 @@ param memoryPipelinePackageUri string = 'https://aka.ms/copilotchat/memorypipeli
 // #disable-next-line no-hardcoded-env-urls
 // param webSearcherPackageUri string = 'https://aka.ms/copilotchat/websearcher/latest'
 
-@description('Location of the adme plugin to deploy')
-#disable-next-line no-hardcoded-env-urls
-param admePackageUri string = 'https://aka.ms/copilotchat/adme/latest'
+// @description('Location of the adme plugin to deploy')
+// #disable-next-line no-hardcoded-env-urls
+// param admePackageUri string = 'https://aka.ms/copilotchat/adme/latest'
 
 @description('Underlying AI service')
 @allowed([
@@ -787,7 +787,6 @@ resource appInsightExtensionMemory 'Microsoft.Web/sites/siteextensions@2022-09-0
 resource appInsightExtensionAdmePlugin 'Microsoft.Web/sites/siteextensions@2022-09-01' = if (deployAdmePlugin) {
   parent: appServiceAdmePlugin
   name: 'Microsoft.ApplicationInsights.AzureWebSites'
-  dependsOn: [ appServiceAdmePluginDeploy ]
 }
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
