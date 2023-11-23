@@ -32,7 +32,6 @@ public class SearchController : ControllerBase
     /// <param name="cts"></param>
     /// <returns></returns>
     [ApiVersion("0.1")]
-    //[Authorize(Policy = "ReadAccess")]
     [HttpGet("{parm}", Name = "Search")]
     public async Task<ActionResult<SearchResult>> Search(string parm,
         [FromQuery] SearchFilters filter, [FromQuery] CancellationToken cts)
@@ -48,7 +47,6 @@ public class SearchController : ControllerBase
     /// <param name="key">Use encoded metadata_storage_path</param>
     /// <returns></returns>
     [HttpGet("get_by_key", Name = "GetDocumentByKey")]
-    [Authorize(Policy = "ReadAccess")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]

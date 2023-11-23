@@ -39,19 +39,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddApplicationInsightsTelemetry();
 
-builder.Services.AddAuthorizationCore(options =>
-{
-    options.AddPolicy("ReadAccess",
-        policy => policy.RequireClaim("roles", "APIReader", "APIRestrictedReader")
-            .RequireScope("access_as_user")); // role defined in API app manifest
-    options.AddPolicy("WriteAccess",
-        policy => policy.RequireClaim("roles", "APIWriter")
-            .RequireScope("access_as_user")); // role defined in API app manifest
-    options.AddPolicy("IndexSource.Write",
-        policy => policy.RequireClaim("roles", "IndexSource.Write").RequireScope("access_as_user"));
-    options.AddPolicy("IndexSource.Read",
-        policy => policy.RequireClaim("roles", "IndexSource.Write", "IndexSource.Read").RequireScope("access_as_user"));
-});
+builder.Services.AddAuthorizationCore();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRouting();
@@ -104,7 +92,7 @@ builder.Services.AddScoped<ICognitiveSearchService, CognitiveSearchService>();
 
 WebApplication app = builder.Build();
 
-app.UseSwaggerUi(builder.Configuration["Swagger:ClientId"]!, 
+app.UseSwaggerUi(builder.Configuration["Swagger:ClientId"]!,
     builder.Configuration["AzureAd:ClientId"]!);
 app.UseCors();
 app.UseHttpsRedirection();
