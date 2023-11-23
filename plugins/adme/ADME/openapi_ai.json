@@ -3,10 +3,10 @@
   "info": {
     "title": "OSDU Copilot Plugin",
     "description": "This is the OSDU plugin for Copilot",
-    "version": "0.2"
+    "version": "0.1"
   },
   "paths": {
-    "/api/search/{parm}": {
+    "/api/v0.1/search/{parm}": {
       "get": {
         "tags": [
           "Search"
