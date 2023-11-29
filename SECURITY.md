@@ -1,41 +1,55 @@
-<!-- BEGIN MICROSOFT SECURITY.MD V0.0.8 BLOCK -->
+# Repository Security Reporting Policy
 
-## Security
+## Introduction
 
-Microsoft takes the security of our software products and services seriously, which includes all source code repositories managed through our GitHub organizations, which include [Microsoft](https://github.com/microsoft), [Azure](https://github.com/Azure), [DotNet](https://github.com/dotnet), [AspNet](https://github.com/aspnet), [Xamarin](https://github.com/xamarin), and [our GitHub organizations](https://opensource.microsoft.com/).
+The purpose of the SECURITY.md file is to offer guidance on reporting security issues or vulnerabilities associated with a Git repository/project.
 
-If you believe you have found a security vulnerability in any Microsoft-owned repository that meets [Microsoft's definition of a security vulnerability](https://aka.ms/opensource/security/definition), please report it to us as described below.
+The guidance may depend on the visibility of the project. Public repos will typically reference how "externals" can get in contact, while internal/private repos may add information on contact  points only available to "internals".
 
-## Reporting Security Issues
+The general description on the mechanics of the SECURITY.md file on github.com is useful. Read the official documentation on [docs.github.com](https://docs.github.com/en/code-security/getting-started/adding-a-security-policy-to-your-repository)
 
-**Please do not report security vulnerabilities through public GitHub issues.**
+Github has a feature called [Security Advisories](https://docs.github.com/en/code-security/security-advisories/repository-security-advisories/about-repository-security-advisories). Using this feature one can privately discuss, fix and publish security vulnerabilities. We do not give a general advice that all projects should use this feature. For some project (public open source projects) this could be a valuable feature that should be investigated.
 
-Instead, please report them to the Microsoft Security Response Center (MSRC) at [https://msrc.microsoft.com/create-report](https://aka.ms/opensource/security/create-report).
+We suggest content for few scenarios. Repository/project owners should adapt to their context following the intention of the SECURITY.md file.
 
-If you prefer to submit without logging in, send email to [secure@microsoft.com](mailto:secure@microsoft.com).  If possible, encrypt your message with our PGP key; please download it from the [Microsoft Security Response Center PGP Key page](https://aka.ms/opensource/security/pgpkey).
+---
 
-You should receive a response within 24 hours. If for some reason you do not, please follow up via email to ensure we received your original message. Additional information can be found at [microsoft.com/msrc](https://aka.ms/opensource/security/msrc). 
+## SECURITY.md template for public repositories
 
-Please include the requested information listed below (as much as you can provide) to help us better understand the nature and scope of the possible issue:
+If you discover a security vulnerability in this project, please follow these steps to responsibly disclose it:
 
-  * Type of issue (e.g. buffer overflow, SQL injection, cross-site scripting, etc.)
-  * Full paths of source file(s) related to the manifestation of the issue
-  * The location of the affected source code (tag/branch/commit or direct URL)
-  * Any special configuration required to reproduce the issue
-  * Step-by-step instructions to reproduce the issue
-  * Proof-of-concept or exploit code (if possible)
-  * Impact of the issue, including how an attacker might exploit the issue
+1. **Do not** create a public GitHub issue for the vulnerability.
+2. Follow our guideline for Responsible Disclosure Policy at [https://www.equinor.com/about-us/csirt](https://www.equinor.com/about-us/csirt) to report the issue
 
-This information will help us triage your report more quickly.
+The following information will help us triage your report more quickly:
 
-If you are reporting for a bug bounty, more complete reports can contribute to a higher bounty award. Please visit our [Microsoft Bug Bounty Program](https://aka.ms/opensource/security/bounty) page for more details about our active programs.
-
-## Preferred Languages
+- Type of issue (e.g. buffer overflow, SQL injection, cross-site scripting, etc.)
+- Full paths of source file(s) related to the manifestation of the issue
+- The location of the affected source code (tag/branch/commit or direct URL)
+- Any special configuration required to reproduce the issue
+- Step-by-step instructions to reproduce the issue
+- Proof-of-concept or exploit code (if possible)
+- Impact of the issue, including how an attacker might exploit the issue
 
 We prefer all communications to be in English.
 
-## Policy
+---
 
-Microsoft follows the principle of [Coordinated Vulnerability Disclosure](https://aka.ms/opensource/security/cvd).
+## SECURITY.md template for internal or private repositories
 
-<!-- END MICROSOFT SECURITY.MD BLOCK -->
+If you discover a security vulnerability in this project, please follow the steps below to report it.
+
+### For "non-critical" issues
+
+- **Alternative A:**  
+Create a GitHub issue for the vulnerability. Avoid putting sensitive information in the issue.
+
+- **Alternative B:**  
+Send an email to the projects maintainer at [security@example.com](mailto:security@example.com) describing the issue.
+
+### For "critical" and time sensitive issues
+
+Phone the Equinor helpdesk:
+
+- Norway (+47) 51 999 222
+- US/Canada (+1) 713 878 6970

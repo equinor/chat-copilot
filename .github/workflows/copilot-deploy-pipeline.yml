@@ -20,11 +20,11 @@ jobs:
   build-memorypipeline:
     uses: ./.github/workflows/copilot-build-memorypipeline.yml
 
-  build-plugins:
-    uses: ./.github/workflows/copilot-build-plugins.yml
+  # build-plugins:
+  #   uses: ./.github/workflows/copilot-build-plugins.yml
 
   int:
-    needs: [build-webapi, build-memorypipeline, build-plugins]
+    needs: [build-webapi, build-memorypipeline]
     uses: ./.github/workflows/copilot-deploy-environment.yml
     with:
       ENVIRONMENT: int
