@@ -38,7 +38,7 @@ jobs:
     steps:
       - name: Generate Deployment Id
         id: deployment-id
-        run: echo "deployment_name=${{ vars.CC_DEPLOYMENT_NAME }}-$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_OUTPUT
+        run: echo "deployment_name=${{ secrets.CC_DEPLOYMENT_NAME }}-$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_OUTPUT
 
       - uses: actions/checkout@v4
         with:
@@ -57,6 +57,6 @@ jobs:
         with:
           azcliversion: 2.30.0
           inlineScript: |
-            AI_SERVICE_KEY=$(az cognitiveservices account keys list --name ${{vars.AZUREOPENAI__NAME}} --resource-group ${{vars.AZUREOPENAI_DEPLOYMENT_GROUP_NAME}} | jq -r '.key1')
+            AI_SERVICE_KEY=$(az cognitiveservices account keys list --name ${{secrets.AZUREOPENAI__NAME}} --resource-group ${{secrets.AZUREOPENAI_DEPLOYMENT_GROUP_NAME}} | jq -r '.key1')
             echo "::add-mask::$AI_SERVICE_KEY"
-            scripts/deploy/deploy-azure.sh --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}} --resource-group ${{vars.CC_DEPLOYMENT_GROUP_NAME}} --deployment-name ${{steps.deployment-id.outputs.deployment_name}} --region ${{vars.CC_DEPLOYMENT_REGION}} --client-id ${{vars.BACKEND_CLIENT_ID}} --frontend-client-id ${{vars.APPLICATION_CLIENT_ID}} --tenant-id ${{secrets.AZURE_TENANT_ID}} --instance ${{vars.AZURE_INSTANCE}} --ai-service AzureOpenAI --ai-endpoint ${{secrets.AZURE_OPENAI_ENDPOINT}} --ai-service-key $AI_SERVICE_KEY --app-service-sku ${{vars.WEBAPP_API_SKU}} --no-deploy-package --debug-deployment
+            scripts/deploy/deploy-azure.sh --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}} --resource-group ${{secrets.CC_DEPLOYMENT_GROUP_NAME}} --deployment-name ${{steps.deployment-id.outputs.deployment_name}} --region ${{secrets.CC_DEPLOYMENT_REGION}} --client-id ${{secrets.AZURE_CLIENT_ID}} --frontend-client-id ${{secrets.APPLICATION_CLIENT_ID}} --tenant-id ${{secrets.AZURE_TENANT_ID}} --instance ${{secrets.AZURE_INSTANCE}} --ai-service AzureOpenAI --ai-endpoint ${{secrets.AZURE_OPENAI_ENDPOINT}} --ai-service-key $AI_SERVICE_KEY --app-service-sku ${{vars.WEBAPP_API_SKU}} --no-deploy-package --debug-deployment

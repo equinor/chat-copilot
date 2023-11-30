@@ -67,5 +67,5 @@ jobs:
           scripts/deploy/deploy-plugins.sh \
             --deployment-name ${{inputs.DEPLOYMENT_NAME}} \
             --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}} \
-            --resource-group ${{vars.CC_DEPLOYMENT_GROUP_NAME}} \
+            --resource-group ${{secrets.CC_DEPLOYMENT_GROUP_NAME}} \
             --packages "${{ github.workspace }}/${{inputs.ARTIFACT_NAME}}"
