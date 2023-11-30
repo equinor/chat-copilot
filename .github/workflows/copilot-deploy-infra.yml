@@ -15,6 +15,19 @@ on:
         required: true
       AZURE_OPENAI_ENDPOINT:
         required: true
+      AZUREOPENAI__NAME:
+        required: true
+      CC_DEPLOYMENT_NAME:
+        required: true
+      CC_DEPLOYMENT_GROUP_NAME:
+        required: true
+      CC_DEPLOYMENT_REGION:
+        required: true
+      APPLICATION_CLIENT_ID:
+        required: true
+      AZURE_INSTANCE:
+        required: true
+      
     outputs:
       deployment-id:
         description: "The Id of the current deployment."

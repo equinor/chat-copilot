@@ -19,6 +19,8 @@ on:
         required: true
       AZURE_SUBSCRIPTION_ID:
         required: true
+      CC_DEPLOYMENT_GROUP_NAME:
+        required: true
 
 permissions:
   contents: read
