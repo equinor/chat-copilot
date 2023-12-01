@@ -31,11 +31,7 @@ jobs:
       WEBAPI_ARTIFACT_NAME: ${{needs.build-webapi.outputs.artifact}}
       MEMORYPIPELINE_ARTIFACT_NAME: ${{needs.build-memorypipeline.outputs.artifact}}
       PLUGINS_ARTIFACT_NAME: ${{needs.build-plugins.outputs.artifact}}
-    secrets:
-      AZURE_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
-      AZURE_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
-      AZURE_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-      AZURE_OPENAI_ENDPOINT: ${{secrets.AZURE_OPENAI_ENDPOINT}}
+    secrets: inherit
 
   int-tests:
     needs: [int]
@@ -43,17 +39,3 @@ jobs:
     with:
       ENVIRONMENT: int
       BACKEND_HOST: ${{needs.int.outputs.backend-host}}
-
-  # stable:
-  #   needs: int-tests
-  #   uses: ./.github/workflows/copilot-deploy-environment.yml
-  #   with:
-  #     ENVIRONMENT: stable
-  #     WEBAPI_ARTIFACT_NAME: ${{needs.build-webapi.outputs.artifact}}
-  #     MEMORYPIPELINE_ARTIFACT_NAME: ${{needs.build-memorypipeline.outputs.artifact}}
-  #     PLUGINS_ARTIFACT_NAME: ${{needs.build-plugins.outputs.artifact}}
-  #   secrets:
-  #     AZURE_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
-  #     AZURE_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
-  #     AZURE_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-  #     AZURE_OPENAI_ENDPOINT: ${{secrets.AZURE_OPENAI_ENDPOINT}}
