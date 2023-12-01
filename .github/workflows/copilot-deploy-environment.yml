@@ -16,13 +16,25 @@ on:
         required: true
         type: string
     secrets:
-      AZURE_CLIENT_ID:
+      AZURE_CLIENT_ID: 
         required: true
       AZURE_TENANT_ID:
         required: true
       AZURE_SUBSCRIPTION_ID:
         required: true
       AZURE_OPENAI_ENDPOINT:
+        required: true
+      AZUREOPENAI__NAME:
+        required: true
+      CC_DEPLOYMENT_NAME:
+        required: true
+      CC_DEPLOYMENT_GROUP_NAME:
+        required: true
+      CC_DEPLOYMENT_REGION:
+        required: true
+      APPLICATION_CLIENT_ID:
+        required: true
+      AZURE_INSTANCE:
         required: true
     outputs:
       backend-host:
@@ -38,17 +50,7 @@ jobs:
     uses: ./.github/workflows/copilot-deploy-infra.yml
     with:
       ENVIRONMENT: ${{inputs.ENVIRONMENT}}
-    secrets:
-      AZURE_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
-      AZURE_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
-      AZURE_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-      AZURE_OPENAI_ENDPOINT: ${{secrets.AZURE_OPENAI_ENDPOINT}}      
-      AZUREOPENAI__NAME: ${{secrets.AZUREOPENAI__NAME}}
-      CC_DEPLOYMENT_NAME: ${{secrets.CC_DEPLOYMENT_NAME}}
-      CC_DEPLOYMENT_GROUP_NAME: ${{secrets.CC_DEPLOYMENT_GROUP_NAME}}
-      CC_DEPLOYMENT_REGION: ${{secrets.CC_DEPLOYMENT_REGION}}
-      APPLICATION_CLIENT_ID: ${{secrets.APPLICATION_CLIENT_ID}}
-      AZURE_INSTANCE: ${{secrets.AZURE_INSTANCE}}
+    secrets: inherit
 
   deploy-backend:
     needs: [deploy-infra]
