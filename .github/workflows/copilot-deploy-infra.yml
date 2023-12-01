@@ -17,8 +17,6 @@ on:
         required: true
       AZUREOPENAI__NAME:
         required: true
-      CC_DEPLOYMENT_NAME:
-        required: true
       CC_DEPLOYMENT_GROUP_NAME:
         required: true
       CC_DEPLOYMENT_REGION:
@@ -51,7 +49,7 @@ jobs:
     steps:
       - name: Generate Deployment Id
         id: deployment-id
-        run: echo "deployment_name=${{ secrets.CC_DEPLOYMENT_NAME }}-$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_OUTPUT
+        run: echo "deployment_name=${{ vars.CC_DEPLOYMENT_NAME }}-$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_OUTPUT
 
       - uses: actions/checkout@v4
         with:
