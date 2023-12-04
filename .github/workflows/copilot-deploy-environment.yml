@@ -26,8 +26,6 @@ on:
         required: true
       AZUREOPENAI__NAME:
         required: true
-      CC_DEPLOYMENT_NAME:
-        required: true
       CC_DEPLOYMENT_GROUP_NAME:
         required: true
       CC_DEPLOYMENT_REGION:
