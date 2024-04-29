@@ -20,10 +20,6 @@ param webApiPackageUri string = 'https://aka.ms/copilotchat/webapi/latest'
 #disable-next-line no-hardcoded-env-urls
 param memoryPipelinePackageUri string = 'https://aka.ms/copilotchat/memorypipeline/latest'
 
-// @description('Location of the websearcher plugin to deploy')
-// #disable-next-line no-hardcoded-env-urls
-// param webSearcherPackageUri string = 'https://aka.ms/copilotchat/websearcher/latest'
-
 @description('Underlying AI service')
 @allowed([
   'AzureOpenAI'
@@ -613,18 +609,6 @@ resource appServiceMemoryPipelineDeploy 'Microsoft.Web/sites/extensions@2022-09-
   ]
 }
 
-resource appServicePlanPlugins 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: 'asp-${uniqueName}-plugins'
-  location: location
-  kind: 'app,linux'
-  sku: {
-    name: webAppServiceSku
-  }
-  properties: {
-    reserved: true
-  }
-}
-
 resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
   name: 'appins-${uniqueName}'
   location: location
@@ -1048,35 +1032,6 @@ resource speechAccount 'Microsoft.CognitiveServices/accounts@2022-12-01' = if (d
     publicNetworkAccess: 'Enabled'
   }
 }
-
-// resource ocrAccount 'Microsoft.CognitiveServices/accounts@2022-12-01' = {
-//   name: 'cog-ocr-${uniqueName}'
-//   location: location
-//   sku: {
-//     name: 'S0'
-//   }
-//   kind: 'FormRecognizer'
-//   identity: {
-//     type: 'None'
-//   }
-//   properties: {
-//     customSubDomainName: 'cog-ocr-${uniqueName}'
-//     networkAcls: {
-//       defaultAction: 'Allow'
-//     }
-//     publicNetworkAccess: 'Enabled'
-//     restore: true
-//   }
-// }
-
-// resource bingSearchService 'Microsoft.Bing/accounts@2020-06-10' = if (deployWebSearcherPlugin) {
-//   name: 'bing-search-${uniqueName}'
-//   location: 'global'
-//   sku: {
-//     name: 'S1'
-//   }
-//   kind: 'Bing.Search.v7'
-// }
 
 output webapiUrl string = appServiceWeb.properties.defaultHostName
 output webapiName string = appServiceWeb.name

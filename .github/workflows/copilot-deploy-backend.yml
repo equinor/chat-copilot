@@ -19,6 +19,9 @@ on:
         required: true
       AZURE_SUBSCRIPTION_ID:
         required: true
+      CC_DEPLOYMENT_GROUP_NAME:
+        required: true
+      
     outputs:
       backend-host:
         description: "Host to which backend is deployed"
@@ -68,7 +71,7 @@ jobs:
       - name: Get app name
         id: app-name
         run: |
-          WEB_APP_NAME=$(az deployment group show --name ${{inputs.DEPLOYMENT_NAME}} --resource-group ${{vars.CC_DEPLOYMENT_GROUP_NAME}} --output json | jq -r '.properties.outputs.webapiName.value')
+          WEB_APP_NAME=$(az deployment group show --name ${{inputs.DEPLOYMENT_NAME}} --resource-group ${{secrets.CC_DEPLOYMENT_GROUP_NAME}} --output json | jq -r '.properties.outputs.webapiName.value')
           echo "AZURE_WEBAPP_NAME=$WEB_APP_NAME" >> $GITHUB_ENV
           echo "backend-host=$WEB_APP_NAME" >> $GITHUB_OUTPUT
 
@@ -77,8 +80,8 @@ jobs:
         with:
           azcliversion: 2.30.0
           inlineScript: |
-            az webapp config appsettings set --resource-group ${{vars.CC_DEPLOYMENT_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --settings WEBSITE_RUN_FROM_PACKAGE="1" -o none
+            az webapp config appsettings set --resource-group ${{secrets.CC_DEPLOYMENT_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --settings WEBSITE_RUN_FROM_PACKAGE="1" -o none
 
       - name: "Deploy"
         run: |
-          scripts/deploy/deploy-webapi.sh -p "${{ github.workspace }}/${{inputs.ARTIFACT_NAME}}/webapi.zip" -d ${{inputs.DEPLOYMENT_NAME}} -s ${{secrets.AZURE_SUBSCRIPTION_ID}} -rg ${{vars.CC_DEPLOYMENT_GROUP_NAME}} --skip-app-registration
+          scripts/deploy/deploy-webapi.sh -p "${{ github.workspace }}/${{inputs.ARTIFACT_NAME}}/webapi.zip" -d ${{inputs.DEPLOYMENT_NAME}} -s ${{secrets.AZURE_SUBSCRIPTION_ID}} -rg ${{secrets.CC_DEPLOYMENT_GROUP_NAME}} --skip-app-registration
