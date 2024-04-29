@@ -19,6 +19,8 @@ on:
         required: true
       AZURE_SUBSCRIPTION_ID:
         required: true
+      CC_DEPLOYMENT_GROUP_NAME:
+        required: true
 
 permissions:
   contents: read
@@ -59,7 +61,7 @@ jobs:
 
       - name: Get app name
         run: |
-          WEB_APP_NAME=$(az deployment group show --name ${{inputs.DEPLOYMENT_NAME}} --resource-group ${{vars.CC_DEPLOYMENT_GROUP_NAME}} --output json | jq -r '.properties.outputs.memoryPipelineName.value')
+          WEB_APP_NAME=$(az deployment group show --name ${{inputs.DEPLOYMENT_NAME}} --resource-group ${{secrets.CC_DEPLOYMENT_GROUP_NAME}} --output json | jq -r '.properties.outputs.memoryPipelineName.value')
           echo "AZURE_WEBAPP_NAME=$WEB_APP_NAME" >> $GITHUB_ENV
 
       - name: Enable Run From Package
@@ -67,7 +69,7 @@ jobs:
         with:
           azcliversion: 2.30.0
           inlineScript: |
-            az webapp config appsettings set --resource-group ${{vars.CC_DEPLOYMENT_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --settings WEBSITE_RUN_FROM_PACKAGE="1" -o none
+            az webapp config appsettings set --resource-group ${{secrets.CC_DEPLOYMENT_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --settings WEBSITE_RUN_FROM_PACKAGE="1" -o none
 
       - name: "Deploy"
         uses: azure/webapps-deploy@v3
